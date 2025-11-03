@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://www.toolxq.com/static/tools/markdown2word/toword.html -->
+<html lang="en" style="--linkover-transition-duration: 300ms;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Markdown to Word Converter</title>
+    <meta name="keywords" content="online tool,markdown to word,converter tool">
+    <meta name="description" content="Free online markdown to word document converter tool, quickly convert markdown format to word document format">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="./static/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Conversion libraries -->
+    <script src="./static/showdown.min.js" charset="UTF-8"></script>
+    <script src="./static/FileSaver.min.js" charset="UTF-8"></script>
+    <script src="./static/html-docx.js" charset="UTF-8"></script>
+
+    <!-- Bootstrap Icons -->
+    <link href="./static/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+        }
+        #markdown {
+            resize: vertical;
+            min-height: 300px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        .btn-convert {
+            background-color: #3498db;
+            border-color: #3498db;
+            transition: all 0.3s ease;
+        }
+        .btn-convert:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .form-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .navbar {
+            background-color: #2c3e50;
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: white !important;
+        }
+        .btn-donate {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-donate:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Markdown Converter</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="text-center mb-4">Markdown to Word Converter</h2>
+                    <div class="mb-3">
+                        <label for="markdown" class="form-label">Enter Markdown Text</label>
+                        <textarea id="markdown" class="form-control" placeholder="Paste your Markdown content here..."></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button onclick="convertToWord()" class="btn btn-convert btn-lg">
+                            Convert to Word
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center text-lg-start py-3 mt-3">
+        <div class="container">
+            <p class="text-center mb-0">© 2025 Online Markdown to Word Tool</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="./static/bootstrap.bundle.min.js"></script>
+
+    <script charset="utf-8">
+    function convertToWord() {
+        var markdownTextarea = document.getElementById('markdown');
+        var markdownText = markdownTextarea.value.trim();
+
+        // Check if input is empty
+        if (!markdownText) {
+            alert('Please enter Markdown text');
+            markdownTextarea.focus();
+            return;
+        }
+
+        try {
+            // Convert Markdown to HTML
+            var converter = new showdown.Converter({
+                tables: true,
+                literalMidWordUnderscores: true
+            });
+
+            var markdownHtml = converter.makeHtml(markdownText);
+            var html = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "  <meta charset=\"UTF-8\">\n" +
+                "  <title>Markdown Conversion Result</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                markdownHtml +
+                "</body>\n" +
+                "</html>";
+
+            // Convert HTML to Word document
+            var file = htmlDocx.asBlob(html);
+            saveAs(file, 'markdown_output.docx');
+        } catch (error) {
+            console.error('Conversion error:', error);
+            alert('An error occurred during conversion, please check your Markdown format');
+        }
+    }
+    </script>
+
+</body></html>
