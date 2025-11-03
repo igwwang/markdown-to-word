@@ -149,7 +149,7 @@
 
             // Convert HTML to Word document
             var file = htmlDocx.asBlob(html);
-            saveAs(file, 'markdown_output.docx');
+            saveAs(file, 'markdown-output.docx');
         } catch (error) {
             console.error('Conversion error:', error);
             alert('An error occurred during conversion, please check your Markdown format');
